@@ -6,7 +6,7 @@
     "private": true,
     "dependencies": {
         "@types/pino": "^6.3.6",
-        "eufy-security-client": "^0.6.0",
+        "eufy-security-client": "^0.8.1",
         "pino": "^6.11.1",
         "qs": "^6.9.6",
         "read-bigint": "^0.1.4",

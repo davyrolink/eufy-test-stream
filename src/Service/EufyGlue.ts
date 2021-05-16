@@ -104,17 +104,17 @@ export class EufyGlue {
                 const station = new Station(this.api, hubResponse);
                 station.on('connect', (...args) => this.stationEventEmitter.emit('connect', ...args));
                 station.on('close', (...args) => this.stationEventEmitter.emit('close', ...args));
-                station.on('start_livestream', (station, channel, metadata, videoStream, audioStream) => {
+                station.on('livestream start', (station, channel, metadata, videoStream, audioStream) => {
                     const device = this.getStationDevice(station.getSerial(), channel);
 
                     this.stationEventEmitter.emit('start_livestream', station, device, metadata, videoStream, audioStream);
                 });
-                station.on('stop_livestream', (station, channel) => {
+                station.on('livestream stop', (station, channel) => {
                     const device = this.getStationDevice(station.getSerial(), channel);
 
                     this.stationEventEmitter.emit('stop_livestream', station, device);
                 });
-                station.update(hubResponse, true);
+                station.update(hubResponse);
 
                 this.stations[hubResponse.station_sn] = station;
             }
@@ -147,7 +147,7 @@ export class EufyGlue {
                     device = new UnknownDevice(this.api, fullDeviceResponse);
                 }
 
-                device.update(fullDeviceResponse, true);
+                device.update(fullDeviceResponse);
 
                 this.devices[fullDeviceResponse.device_sn] = device;
             }
@@ -156,7 +156,7 @@ export class EufyGlue {
         this.logger.debug(`EufySecurity.handleDevices(): devices - %j`, this.devices);
     }
 
-    public async logon(verify_code?: number): Promise<void> {
+    public async logon(verify_code?: string): Promise<void> {
         if (verify_code) {
             await this.api.addTrustDevice(verify_code).then((result) => {
                 if (!result) {

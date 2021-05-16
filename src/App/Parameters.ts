@@ -10,7 +10,7 @@ export const Parameters = (): ParametersInterface => {
         eufyConfig: {
             username: 'lorem@ipsum.com',
             password: '123456789',
-            maxLivestreamDuration: 10,
+            maxLivestreamDuration: 20,
         },
         cameraDeviceId: 'T8210P0000000000',
     };
